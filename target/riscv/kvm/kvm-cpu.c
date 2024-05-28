@@ -2001,11 +2001,11 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
 
     if ((bp->saved_insn & 0x3) == 0x3) {
         if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0)
-            || cpu_memory_rw_debug(cs, bp->pc, &ebreak_insn, 4, 1)) {
+            || cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&ebreak_insn, 4, 1)) {
             return -EINVAL;
         }
     } else {
-        if (cpu_memory_rw_debug(cs, bp->pc, &c_ebreak_insn, 2, 1)) {
+        if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&c_ebreak_insn, 2, 1)) {
             return -EINVAL;
         }
     }
